@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <h1 className="text-2xl font-bold mb-4">Şifreleme ve Şifre Çözme Uygulaması</h1>
+      <h1 className="text-black text-2xl font-bold mb-4">Şifreleme ve Şifre Çözme Uygulaması</h1>
 
       <div className="w-full max-w-md bg-white p-6 rounded shadow">
         <label className="block mb-2">Mesaj:</label>
