@@ -6,6 +6,7 @@ export default function Home() {
   const [encryptedMessage, setEncryptedMessage] = useState(""); // Şifrelenmiş mesaj
   const [decryptedMessage, setDecryptedMessage] = useState(""); // Çözülmüş mesaj
   const [key, setKey] = useState(""); // Kullanıcıdan gelen veya oluşturulan anahtar
+  const [encryptionMethod, setEncryptionMethod] = useState("AES"); // Seçilen şifreleme yöntemi
 
   // Şifreleme isteği
   const handleEncrypt = async () => {
@@ -14,11 +15,12 @@ export default function Home() {
     const response = await fetch("/api/encrypt", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type: "encrypt", message }),
+      body: JSON.stringify({ type: "encrypt", method: encryptionMethod, message }),
     });
 
     const data = await response.json();
     if (response.ok) {
+      console.log(response.type)
       setEncryptedMessage(data.encryptedMessage);
       setKey(data.key); // Oluşturulan anahtarı sakla
     } else {
@@ -33,11 +35,12 @@ export default function Home() {
     const response = await fetch("/api/encrypt", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type: "decrypt", message: encryptedMessage, key }),
+      body: JSON.stringify({ type: "decrypt", method: encryptionMethod, message: encryptedMessage, key }),
     });
-
+    
     const data = await response.json();
     if (response.ok) {
+      
       setDecryptedMessage(data.decryptedMessage);
     } else {
       alert(data.error);
@@ -49,10 +52,21 @@ export default function Home() {
       <h1 className="text-black text-2xl font-bold mb-4">Şifreleme ve Şifre Çözme Uygulaması</h1>
 
       <div className="w-full max-w-md bg-white p-6 rounded shadow">
+        <label className="block mb-2">Şifreleme Yöntemi:</label>
+        <select
+          className="w-full p-2 border rounded mb-4"
+          value={encryptionMethod}
+          onChange={(e) => setEncryptionMethod(e.target.value)}
+        >
+          <option value="AES">AES</option>
+          <option value="MD5">MD5</option>
+          <option value="SHA256">SHA256</option>
+        </select>
+
         <label className="block mb-2">Mesaj:</label>
         <textarea
           className="w-full p-2 border rounded mb-4"
-          rows="3"
+          rows={3}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
