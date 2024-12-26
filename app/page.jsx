@@ -100,6 +100,8 @@ export default function Home() {
           <option value="AES">AES</option>
           <option value="MD5">MD5</option>
           <option value="SHA256">SHA256</option>
+          <option value="RSA">RSA</option>
+
         </select>
 
         <label className="block mb-2">Mesaj:</label>
