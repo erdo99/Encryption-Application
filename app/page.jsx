@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -8,6 +9,11 @@ export default function Home() {
   const [key, setKey] = useState("");
   const [encryptionMethod, setEncryptionMethod] = useState("AES");
   const canvasRef = useRef(null);
+  const router = useRouter();
+
+  const handleNavigateToAll = () => {
+    router.push("/all");
+  };
 
   // Şifreleme isteği
   const handleEncrypt = async () => {
@@ -126,6 +132,12 @@ export default function Home() {
             Şifreyi Çöz
           </button> 
 
+          <button
+          className="w-full bg-purple-500 text-white p-2 rounded mt-4 hover:bg-purple-700 transition-colors"
+          onClick={handleNavigateToAll}
+        >
+          All Klasörüne Git
+        </button>
         {encryptedMessage && (
           <div className="mt-6 bg-yellow-100 p-4 rounded shadow">
             <h2 className="font-bold">Şifrelenmiş Mesaj:</h2>

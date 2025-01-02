@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { encryptMessage, decryptMessage, generateRandomKey } from "@/lib/crypto";
+import { encryptMessage, decryptMessage, generateRandomKey } from "@/lib/crypto.js";
 
 export async function POST(request) {
   const { type, message, key, method } = await request.json();
