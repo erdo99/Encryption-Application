@@ -7,6 +7,7 @@ export default function AESPage() {
   const [encryptedText, setEncryptedText] = useState('');
   const [decryptedText, setDecryptedText] = useState('');
   const [slideIndex, setSlideIndex] = useState(0);
+  const [error, setError] = useState('');
 
   const slides = [
     'AES (Advanced Encryption Standard) modern şifreleme algoritmaları arasında yer alır.',
@@ -14,40 +15,51 @@ export default function AESPage() {
     'AES, 128-bit, 192-bit ve 256-bit anahtar uzunluklarını destekler.',
     'Bu algoritma, hızlı ve güvenli olması nedeniyle tercih edilir.',
   ];
-  const secretKey = process.env.SECRET_KEY;
 
   const encrypt = async () => {
     try {
+      setError('');
+      if (!inputText) {
+        setError('Lütfen şifrelenecek metin girin');
+        return;
+      }
+
       const response = await fetch('/api/aes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'encrypt',
-          text: inputText,
-          secretKey: 'process.env.SECRET_KEY', // Secret key burada sabit veya dinamik olabilir.
+          text: inputText
         }),
       });
   
       const data = await response.json();
       if (response.ok) {
         setEncryptedText(data.result);
+        setDecryptedText(''); // Şifreleme yapıldığında decrypt sonucunu temizle
       } else {
-        console.error(data.error);
+        setError(data.error || 'Şifreleme sırasında bir hata oluştu');
       }
     } catch (error) {
+      setError('Şifreleme işlemi başarısız oldu');
       console.error('Error during encryption:', error);
     }
   };
 
   const decrypt = async () => {
     try {
-      const response = await fetch('/api/route', {
+      setError('');
+      if (!encryptedText) {
+        setError('Lütfen şifresi çözülecek metin girin');
+        return;
+      }
+
+      const response = await fetch('/api/aes', {  // endpoint düzeltildi
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'decrypt',
-          text: encryptedText,
-          secretKey: 'your-secret-key', // Aynı secret key kullanılmalı.
+          text: encryptedText
         }),
       });
   
@@ -55,9 +67,10 @@ export default function AESPage() {
       if (response.ok) {
         setDecryptedText(data.result);
       } else {
-        console.error(data.error);
+        setError(data.error || 'Şifre çözme sırasında bir hata oluştu');
       }
     } catch (error) {
+      setError('Şifre çözme işlemi başarısız oldu');
       console.error('Error during decryption:', error);
     }
   };
@@ -71,10 +84,15 @@ export default function AESPage() {
       <div style={{ textAlign: 'center', padding: '2rem' }}>
         <h1>AES Encryption</h1>
         <p>Advanced Encryption Standard (AES) şifreleme algoritması</p>
+        {error && (
+          <div style={{ color: 'red', marginTop: '1rem' }}>
+            {error}
+          </div>
+        )}
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: '2rem', padding: '2rem' }}>
-        {/* Şifreleme ve Şifre Çözme Bölümleri */}
+        {/* Şifreleme Bölümü */}
         <div style={{ flex: 1, textAlign: 'center' }}>
           <h2>Şifreleme</h2>
           <textarea
@@ -84,7 +102,11 @@ export default function AESPage() {
             onChange={(e) => setInputText(e.target.value)}
             style={{ width: '100%', marginBottom: '1rem' }}
           />
-          <button onClick={encrypt} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
+          <button 
+            onClick={encrypt} 
+            style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
+            disabled={!inputText}
+          >
             Şifrele
           </button>
           {encryptedText && (
@@ -94,9 +116,14 @@ export default function AESPage() {
           )}
         </div>
 
+        {/* Şifre Çözme Bölümü */}
         <div style={{ flex: 1, textAlign: 'center' }}>
           <h2>Şifre Çözme</h2>
-          <button onClick={decrypt} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
+          <button 
+            onClick={decrypt} 
+            style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
+            disabled={!encryptedText}
+          >
             Şifreyi Çöz
           </button>
           {decryptedText && (
