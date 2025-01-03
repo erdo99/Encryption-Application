@@ -26,12 +26,12 @@ export default function Page() {
           </div>
         </Link>
 
-        <Link href="/tdes">
+        <Link href="/rsa">
           <div style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', textAlign: 'center', cursor: 'pointer' }}>
-            <h3>TDES</h3>
-            <p>Triple Data Encryption System</p>
-            <p>Key Bits: 168 bits</p>
-            <p>Security Level: Medium</p>
+          <h3>RSA</h3>
+          <p>Rivest-Shamir-Adleman</p>
+          <p>Key Length: 512-4096 bits</p>
+          <p>Security Level: High</p>
           </div>
         </Link>
 
