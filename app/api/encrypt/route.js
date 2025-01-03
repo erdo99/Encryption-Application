@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { encryptMessage, decryptMessage, generateRandomKey } from "@/lib/crypto.js";
+import CryptoJS from "crypto-js";
+import crypto from "node:crypto";
 
 export async function POST(request) {
   const { type, message, key, method } = await request.json();
@@ -18,7 +20,8 @@ export async function POST(request) {
 
     if (method === "RSA") {
       if (!key) {
-        return NextResponse.json({ error: "RSA şifreleme için bir public key gerekli!" }, { status: 400 });
+        //return NextResponse.json({ error: "RSA şifreleme için bir public key gerekli!" }, { status: 400 });
+        key = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Hex);
       }
       encrypted = encryptMessage(message, key, "RSA");
     } else {

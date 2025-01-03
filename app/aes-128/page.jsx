@@ -1,6 +1,5 @@
 "use client";
 import { useState } from 'react';
-import Layout from '../components/layout/Layout';
 
 export default function AESPage() {
   const [inputText, setInputText] = useState('');
@@ -29,10 +28,10 @@ export default function AESPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'encrypt',
-          text: inputText
+          text: inputText,
         }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         setEncryptedText(data.result);
@@ -54,15 +53,15 @@ export default function AESPage() {
         return;
       }
 
-      const response = await fetch('/api/aes', {  // endpoint düzeltildi
+      const response = await fetch('/api/aes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'decrypt',
-          text: encryptedText
+          text: encryptedText,
         }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         setDecryptedText(data.result);
@@ -80,48 +79,76 @@ export default function AESPage() {
   };
 
   return (
-    <Layout>
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <h1>AES Encryption</h1>
-        <p>Advanced Encryption Standard (AES) şifreleme algoritması</p>
-        {error && (
-          <div style={{ color: 'red', marginTop: '1rem' }}>
-            {error}
-          </div>
+    <div style={{ display: 'flex', height: '100vh', background: '#f0f0f0', padding: '1rem' }}>
+      {/* Şifreleme Bölümü */}
+      <div
+        style={{
+          flex: 1,
+          background: 'linear-gradient(135deg, #6a11cb, #2575fc)',
+          borderRadius: '12px',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+          padding: '2rem',
+          color: '#fff',
+          marginRight: '1rem',
+        }}
+      >
+        <h2>Şifreleme</h2>
+        <textarea
+          rows={5}
+          placeholder="Şifrelemek için metin girin"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '0.5rem',
+            borderRadius: '8px',
+            border: 'none',
+            marginBottom: '1rem',
+            boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.2)',
+            color: 'black',
+          }}
+        />
+        <button
+          onClick={encrypt}
+          style={{
+            padding: '0.75rem 1.5rem',
+            border: 'none',
+            borderRadius: '8px',
+            background: '#fff',
+            color: '#2575fc',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseOver={(e) => (e.target.style.background = '#e0e0e0')}
+          onMouseOut={(e) => (e.target.style.background = '#fff')}
+          disabled={!inputText}
+        >
+          Şifrele
+        </button>
+        {encryptedText && (
+          <p style={{ marginTop: '1rem', wordBreak: 'break-word', color: '#e0e0e0' }}>
+            <strong>Şifrelenmiş Metin:</strong> {encryptedText}
+          </p>
         )}
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '2rem', padding: '2rem' }}>
-        {/* Şifreleme Bölümü */}
-        <div style={{ flex: 1, textAlign: 'center' }}>
-          <h2>Şifreleme</h2>
-          <textarea
-            rows={5}
-            placeholder="Şifrelemek için metin girin"
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            style={{ width: '100%', marginBottom: '1rem' }}
-          />
-          <button 
-            onClick={encrypt} 
-            style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
-            disabled={!inputText}
-          >
-            Şifrele
-          </button>
-          {encryptedText && (
-            <p style={{ marginTop: '1rem', wordBreak: 'break-word' }}>
-              <strong>Şifrelenmiş Metin:</strong> {encryptedText}
-            </p>
-          )}
-        </div>
-
-        {/* Şifre Çözme Bölümü */}
-        <div style={{ flex: 1, textAlign: 'center' }}>
+      {/* Şifre Çözme ve Slayt Gösterisi */}
+      <div style={{ flex: 2, padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div>
           <h2>Şifre Çözme</h2>
-          <button 
-            onClick={decrypt} 
-            style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
+          <button
+            onClick={decrypt}
+            style={{
+              padding: '0.75rem 1.5rem',
+              border: 'none',
+              borderRadius: '8px',
+              background: '#2575fc',
+              color: '#fff',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              transition: 'all 0.3s ease',
+            }}
             disabled={!encryptedText}
           >
             Şifreyi Çöz
@@ -133,8 +160,7 @@ export default function AESPage() {
           )}
         </div>
 
-        {/* Slayt Gösterisi */}
-        <div style={{ flex: 1, textAlign: 'center' }}>
+        <div>
           <h2>Açıklamalar</h2>
           <div
             style={{
@@ -151,11 +177,21 @@ export default function AESPage() {
           >
             {slides[slideIndex]}
           </div>
-          <button onClick={nextSlide} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
+          <button
+            onClick={nextSlide}
+            style={{
+              padding: '0.75rem 1.5rem',
+              borderRadius: '8px',
+              background: '#6a11cb',
+              color: '#fff',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+          >
             Sonraki
           </button>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 }
