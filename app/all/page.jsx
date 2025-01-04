@@ -58,7 +58,7 @@ export default function Page() {
           </div>
         </Link>
 
-        <Link href="/sha-1">
+        <Link href="/sha1">
           <div style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', textAlign: 'center', cursor: 'pointer' }}>
             <h3>SHA-1</h3>
             <p>Secure Hash Algorithm</p>
@@ -67,7 +67,7 @@ export default function Page() {
           </div>
         </Link>
 
-        <Link href="/sha-2">
+        <Link href="/sha2">
           <div style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', textAlign: 'center', cursor: 'pointer' }}>
             <h3>SHA-2</h3>
             <p>Secure Hash Algorithm</p>

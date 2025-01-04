@@ -13,9 +13,11 @@ export default function AESPage() {
     'Orijinal adıyla Rijndael olarak da bilinen Gelişmiş Şifreleme Standardı',
     '2001 yılında ABD Ulusal Standartlar ve Teknoloji Enstitüsü tarafından oluşturulan elektronik verilerin şifrelenmesi için bir spesifikasyondur.',
     'AES veri şifreleme ve güvenli veri transferinde yaygın olarak kullanılır.',
+    'AESe simetrik şifreleme denmesinin nedeni, hem şifreleme (encrypt) hem de şifre çözme (decrypt) işlemlerinde aynı anahtarın kullanılmasıdır. Bu, simetrik şifreleme algoritmalarının temel özelliğidir.',
     'AES, 128-bit, 192-bit ve 256-bit anahtar uzunluklarını destekler.',
     'Bu algoritma, hızlı ve güvenli olması nedeniyle tercih edilir.',
-    'Şimdiye kadar kaba kuvvet veya başka yöntemlerle kırılamadığı söyleniyor.'
+    'Şimdiye kadar kaba kuvvet veya başka yöntemlerle kırılamadığı söyleniyor.',
+    'Hassas verilerin (örneğin, kredi kartı bilgileri, kişisel veriler) güvenli şekilde saklanması ve iletilmesinde kullanılır.'
   ];
 
   const encrypt = async () => {
