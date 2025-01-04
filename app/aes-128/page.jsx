@@ -10,9 +10,12 @@ export default function AESPage() {
 
   const slides = [
     'AES (Advanced Encryption Standard) modern şifreleme algoritmaları arasında yer alır.',
-    'AES, veri şifreleme ve güvenli veri transferinde yaygın olarak kullanılır.',
+    'Orijinal adıyla Rijndael olarak da bilinen Gelişmiş Şifreleme Standardı',
+    '2001 yılında ABD Ulusal Standartlar ve Teknoloji Enstitüsü tarafından oluşturulan elektronik verilerin şifrelenmesi için bir spesifikasyondur.',
+    'AES veri şifreleme ve güvenli veri transferinde yaygın olarak kullanılır.',
     'AES, 128-bit, 192-bit ve 256-bit anahtar uzunluklarını destekler.',
     'Bu algoritma, hızlı ve güvenli olması nedeniyle tercih edilir.',
+    'Şimdiye kadar kaba kuvvet veya başka yöntemlerle kırılamadığı söyleniyor.'
   ];
 
   const encrypt = async () => {
